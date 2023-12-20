@@ -1,0 +1,102 @@
+
+            /*         F[2] = new Transform3DGroup();
+                     T = new TranslateTransform3D(0, 0, 0);
+                     R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[2].aksiirrotX, nyjet[2].aksiirrotY, nyjet[2].aksiirrotZ), kendet[2]), new Point3D(nyjet[2].pikaerrotX, nyjet[2].pikaerrotY, nyjet[2].pikaerrotZ));
+                     F[2].Children.Add(T);
+                     F[2].Children.Add(R);
+                     F[2].Children.Add(F[1]);
+
+                     F[3] = new Transform3DGroup();
+                     T = new TranslateTransform3D(0, 0, 0);
+                     R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[3].aksiirrotX, nyjet[3].aksiirrotY, nyjet[3].aksiirrotZ), kendet[3]), new Point3D(nyjet[3].pikaerrotX, nyjet[3].pikaerrotY, nyjet[3].pikaerrotZ));
+                     F[3].Children.Add(T);
+                     F[3].Children.Add(R);
+                     F[3].Children.Add(F[2]);
+
+                     F[4] = new Transform3DGroup();
+                     T = new TranslateTransform3D(0, 0, 0);
+                     R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[4].aksiirrotX, nyjet[4].aksiirrotY, nyjet[4].aksiirrotZ), kendet[4]), new Point3D(nyjet[4].pikaerrotX, nyjet[4].pikaerrotY, nyjet[4].pikaerrotZ));
+                     F[4].Children.Add(T);
+                     F[4].Children.Add(R);
+                     F[4].Children.Add(F[3]);
+
+                     F[5] = new Transform3DGroup();
+                     T = new TranslateTransform3D(0, 0, 0);
+                     R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[5].aksiirrotX, nyjet[5].aksiirrotY, nyjet[5].aksiirrotZ), kendet[5]), new Point3D(nyjet[5].pikaerrotX, nyjet[5].pikaerrotY, nyjet[5].pikaerrotZ));
+                     F[5].Children.Add(T);
+                     F[5].Children.Add(R);
+                     F[5].Children.Add(F[4]);
+            */
+        
+
+
+
+
+/*
+            nyjet[0].modeli.Transform = F1;
+            nyjet[1].modeli.Transform = F2;
+            nyjet[2].modeli.Transform = F3;
+            nyjet[3].modeli.Transform = F4;
+            nyjet[4].modeli.Transform = F5;
+            nyjet[5].modeli.Transform = F6;
+*/
+
+
+
+
+/*
+        public void Levizja_reale(int[] kendet_aktuale)
+        {
+
+
+            V[0] = new Transform3DGroup();
+            R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[0].aksiirrotX, nyjet[0].aksiirrotY, nyjet[0].aksiirrotZ), kendet_aktuale[0]), new Point3D(nyjet[0].pikaerrotX, nyjet[0].pikaerrotY, nyjet[0].pikaerrotZ));
+            V[0].Children.Add(R);
+
+            V[1] = new Transform3DGroup();
+            //  T = new TranslateTransform3D(0, 0, 0);
+            R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[1].aksiirrotX, nyjet[1].aksiirrotY, nyjet[1].aksiirrotZ), kendet_aktuale[1]), new Point3D(nyjet[1].pikaerrotX, nyjet[1].pikaerrotY, nyjet[1].pikaerrotZ));
+            // F2.Children.Add(T);
+            v1.Children.Add(R);
+            v1.Children.Add(v0);
+
+            v2 = new Transform3DGroup();
+            //  T = new TranslateTransform3D(0, 0, 0);
+            R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[2].aksiirrotX, nyjet[2].aksiirrotY, nyjet[2].aksiirrotZ), kendet_aktuale[2]), new Point3D(nyjet[2].pikaerrotX, nyjet[2].pikaerrotY, nyjet[2].pikaerrotZ));
+            //  v2.Children.Add(T);
+            v2.Children.Add(R);
+            v2.Children.Add(v1);
+
+            v3 = new Transform3DGroup();
+            R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[3].aksiirrotX, nyjet[3].aksiirrotY, nyjet[3].aksiirrotZ), kendet_aktuale[3]), new Point3D(nyjet[3].pikaerrotX, nyjet[3].pikaerrotY, nyjet[3].pikaerrotZ));
+            // v3.Children.Add(T);
+            v3.Children.Add(R);
+            v3.Children.Add(v2);
+
+
+
+                   v5 = new Transform3DGroup();
+                 //  T = new TranslateTransform3D(0, 0, 0);
+                   R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet[4].aksiirrotX, nyjet[4].aksiirrotY, nyjet[4].aksiirrotZ), kendet[4]), new Point3D(nyjet[4].pikaerrotX, nyjet[4].pikaerrotY, nyjet[4].pikaerrotZ));
+                   v5.Children.Add(T);
+                   v5.Children.Add(R);
+                   v5.Children.Add(v4);
+
+            pozita_e_rrobotit[0].vija.Transform = v0;
+            pozita_e_rrobotit[1].vija.Transform = v1;
+            pozita_e_rrobotit[2].vija.Transform = v2;
+            pozita_e_rrobotit[3].vija.Transform = v3;
+            pozita_e_rrobotit[4].vija.Transform = v3;
+            pozita_e_rrobotit[5].vija.Transform = v3;
+
+
+
+
+
+
+
+
+
+
+        }
+ */
