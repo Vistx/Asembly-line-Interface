@@ -113,19 +113,6 @@
                 <Image HorizontalAlignment="Left" Height="40" Margin="111,100,0,0" VerticalAlignment="Top" Width="39" Source="sensor-svgrepo-com.png" Stretch="UniformToFill"/>
                 <Rectangle x:Name="S6" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="40" Margin="66,145,0,0" Stroke="Black" VerticalAlignment="Top" Width="40"/>
                 <Image  HorizontalAlignment="Left" Height="40" Margin="111,145,0,0" VerticalAlignment="Top" Width="39" Source="sensor-svgrepo-com.png" Stretch="UniformToFill"/>
-                <WindowsFormsHost HorizontalAlignment="Left" Height="316" Margin="10,197,0,0" VerticalAlignment="Top" Width="358">
-                    <wf:Chart x:Name="Chart1" >
-                        <wf:Chart.Series>
-                            <wf:Series Name="Series1" ChartType="Line" />
-                            <wf:Series Name="Series2"  ChartType="Point" />
-                            <wf:Series Name="Series3"  ChartType="Point" />
-                        </wf:Chart.Series>
-
-                        <wf:Chart.ChartAreas>
-                            <wf:ChartArea />
-                        </wf:Chart.ChartAreas>
-                    </wf:Chart>
-                </WindowsFormsHost>
                 <Label Content="So" HorizontalAlignment="Left" Margin="20,17,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Blue"/>
                 <Label Content="P1" HorizontalAlignment="Left" Margin="20,63,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Blue"/>
                 <Label Content="S1" HorizontalAlignment="Left" Margin="20,107,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Blue"/>

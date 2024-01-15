@@ -50,6 +50,7 @@ namespace _6DOF_BOT
     public partial class MainWindow : Window
     {
         Model3DGroup KrahuRobotik = new Model3DGroup(); //Krahu rrobotik grupi i 3dmodeleve
+        Model3DGroup KrahuRobotik_2dof = new Model3DGroup(); //Krahu rrobotik grupi i 3dmodeleve
         Model3D sfera = null;
         ModbusClient Roboti_Kom;
         MeshBuilder[] sferat_e_pozites_aktuale = new MeshBuilder [6];// ndryshimi nga v3
@@ -58,9 +59,12 @@ namespace _6DOF_BOT
 
 
         double L1 = 4, L2 = 4, Teta1 = 0.0, Teta2 = 0.0, x1 = 4.0, x2 = 8.0, y1 = 0.0, y2 = 0.0;
+        int[] teta = new int[3];
+        
 
         Vector3D reachingPoint = new Vector3D(0, 0, 0);
         List<Nyjet> nyjet = null;
+        List<Nyjet> nyjet_2dof = null;
         bool ndrrimiinyjeve = false;
         bool duke_levizur = false;
         bool gjurmo_levizjet = false;
@@ -73,6 +77,7 @@ namespace _6DOF_BOT
         double Kufiri_i_distances = 50;
         //provides render to model3d objects
         ModelVisual3D RoboticArm = new ModelVisual3D();
+        ModelVisual3D RoboticArm_2dof = new ModelVisual3D();
         bool[] mberritja_e_vleres = new bool[6];
         int[] kendet_aktuale = { 0, 0, 0, 0 , 0 , 0  };
         Vija[] pozita_e_rrobotit = new Vija [6]; //LISTE ME 6 INSTANCA VIJA
@@ -80,10 +85,14 @@ namespace _6DOF_BOT
         Transform3DGroup[] F = new Transform3DGroup[6];  //MODELET STL
         Transform3DGroup[] V = new Transform3DGroup[6];  // vIJAT
         Transform3DGroup[] P = new Transform3DGroup[6]; // PIKAT(Sferat)
+        Transform3DGroup[] _2dof = new Transform3DGroup[3];
 
 
         RotateTransform3D R; //MATRICA RROTULLUESE
         TranslateTransform3D T; //MATRICA TRANSFORMUESE
+
+        RotateTransform3D R_2dof; //MATRICA RROTULLUESE
+        TranslateTransform3D T_2dof; //MATRICA TRANSFORMUESE
         Vector3D pika_e_arritur;
         int levizjet = 50;
         System.Windows.Forms.Timer timer1,timer2,timer3;
@@ -100,6 +109,13 @@ namespace _6DOF_BOT
         private const string Nyja_6_3d = "nyja6v_1.0.stl";
         private const string Baza_e_rrobotit = "bazav_1.0.stl";
 
+        private const string Baza = "Baza_2dof.stl";
+        private const string krahu1 = "krahu1_2dof.stl";
+        private const string krahu2 = "krahu2_2dof.stl";
+
+
+
+
         public MainWindow()
 
         {
@@ -107,6 +123,7 @@ namespace _6DOF_BOT
             z_nyjen.Value = 4;
             FollderiBaze = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\3dModelet\\";
             List<string> emrat_e_3D_modeleve = new List<string>();
+            
             emrat_e_3D_modeleve.Add(Nyja_1_3d);
             emrat_e_3D_modeleve.Add(Nyja_2_3d);
             emrat_e_3D_modeleve.Add(Nyja_3_3d);
@@ -114,9 +131,15 @@ namespace _6DOF_BOT
             emrat_e_3D_modeleve.Add(Nyja_5_3d);
             emrat_e_3D_modeleve.Add(Nyja_6_3d);
             emrat_e_3D_modeleve.Add(Baza_e_rrobotit);
-           
+
+
+            List<string> emrat_e_3D_modeleve_2dof = new List<string>();
+            emrat_e_3D_modeleve_2dof.Add(Baza);
+            emrat_e_3D_modeleve_2dof.Add(krahu1);
+            emrat_e_3D_modeleve_2dof.Add(krahu2);
 
             RoboticArm.Content = Initialize_Environment(emrat_e_3D_modeleve);
+            RoboticArm_2dof.Content = Initialize_Environment_2dof(emrat_e_3D_modeleve_2dof);
 
             //sfera per levizjet e nyjeve
             var nderto = new MeshBuilder(true, true);
@@ -126,50 +149,15 @@ namespace _6DOF_BOT
             visual = new ModelVisual3D();
             visual.Content = sfera;
 
-
-            Chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            Chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            Chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = true;
-            Chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = true;
-            Chart1.ChartAreas[0].AxisX.Maximum = 10;
-            Chart1.ChartAreas[0].AxisX.Minimum = -10;
-            Chart1.ChartAreas[0].AxisY.Maximum = 10;
-            Chart1.ChartAreas[0].AxisY.Minimum = -10;
-
-            Chart1.Series[0].Points.AddXY(0, 0);
-            Chart1.Series[0].Points.AddXY(4, 0);
-            Chart1.Series[0].Points.AddXY(8, 0);
-            Chart1.Series[0].BorderWidth = 8;
-
-            Chart1.Series[1].Points.AddXY(0, 0);
-            Chart1.Series[1].Points.AddXY(4, 0);
-            Chart1.Series[1].Points.AddXY(8, 0);
-            Chart1.Series[1].BorderWidth = 10;
-
-            Chart1.Series[2].Points.AddXY(-8, -8);
-            Chart1.Series[2].Points.AddXY(8, 8);
-            Chart1.Series[2].Points.AddXY(-8, 8);
-            Chart1.Series[2].Points.AddXY(8, -8);
-
-
-
-
-
-
-
-
-
-
-
             viewPort3d.Children.Add(visual);
             viewPort3d.Children.Add(RoboticArm);
-
+            viewPort3d.Children.Add(RoboticArm_2dof);
 
             viewPort3d.RotateGesture = new MouseGesture(MouseAction.RightClick);
             viewPort3d.PanGesture = new MouseGesture(MouseAction.LeftClick);
             viewPort3d.Camera.LookDirection = new Vector3D(-658.952, 847.224, -549.795);
             viewPort3d.Camera.UpDirection = new Vector3D(0.250, -0.321, 0.914);
-            viewPort3d.Camera.Position = new Point3D(543.496, -838.654, 669.956);
+            viewPort3d.Camera.Position = new Point3D(540.624, -893.148, 628.976);
             //viewPort3d.Camera.Target??
 
 
@@ -204,29 +192,16 @@ namespace _6DOF_BOT
            
         }
 
-        private void drawArm(int line, int dot, double[] data)
-        {
-            Chart1.Series[line].Points[1].XValue= data[0];
-            Chart1.Series[line].Points[1].YValues[0] = data[1];
-            
-            Chart1.Series[dot].Points[1].XValue = data[0];
-            Chart1.Series[dot].Points[1].YValues[0] = data[1];
-          
-            Chart1.Series[line].Points[2].XValue = data[2];
-            Chart1.Series[line].Points[2].YValues[0] = data[3];
-            Chart1.Series[dot].Points[2].XValue = data[2];
-            Chart1.Series[dot].Points[2].YValues[0] = data[3];
-        }
-
+    
 
 
         private void timer3_tick(object sender, EventArgs e)
         {
-
             int[] v_senzore = Roboti_Kom.ReadHoldingRegisters(0,7);
             int[] v_servo= Roboti_Kom.ReadHoldingRegisters(7, 4);
             int[] v_servo2 = Roboti_Kom.ReadHoldingRegisters(11,2);
             int[] moda = Roboti_Kom.ReadHoldingRegisters(13, 3);
+
 
             if (moda[0]==1 && moda[1]>=0 && moda[1] <= 3) {
                 z_nyjen.Value = moda[1];
@@ -248,6 +223,7 @@ namespace _6DOF_BOT
               nyjet[4].kendi= nyjet[5].kendi = 0;
          
             eg_kinematika_direkte();
+            Kin_direkte_2dof();
 
             if (v_senzore[0] == 0) { S0.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0)); } else { S0.Fill = new SolidColorBrush(Color.FromRgb(0, 230, 0)); }
             if (v_senzore[1] == 0) { S1.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0)); } else { S1.Fill = new SolidColorBrush(Color.FromRgb(0, 230, 0)); }
@@ -257,15 +233,8 @@ namespace _6DOF_BOT
             if (v_senzore[5] == 0) { S5.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0)); } else { S5.Fill = new SolidColorBrush(Color.FromRgb(0, 230, 0)); }
             if (v_senzore[6] == 0) { S6.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0)); } else { S6.Fill = new SolidColorBrush(Color.FromRgb(0, 230, 0)); }
 
-            Teta1 = v_servo2[0];
-            Teta2 = v_servo2[1];
-
-            Forward_kinematika();
-            double[] data1 = { x1, y1, x2, y2 };
-            drawArm(0, 1, data1);
-
-
-
+            teta[0]= v_servo2[0];
+            teta[1]= v_servo2[1];
         }
 
         private void timer2_tick(object sender, EventArgs e)
@@ -411,7 +380,6 @@ namespace _6DOF_BOT
             return Math.Sqrt(Math.Pow((pika.X - qellimi.X), 2.0) + Math.Pow((pika.Y - qellimi.Y), 2.0) + Math.Pow((pika.Z - qellimi.Z), 2.0));
         }
 
-        List<string> emrat_e_3D_modeleve = new List<string>();
         private Model3DGroup Initialize_Environment(List<string> emrat_e_3D_modeleve)
         {
             try
@@ -511,7 +479,77 @@ namespace _6DOF_BOT
             return KrahuRobotik;
         }
 
-       
+        private Model3DGroup Initialize_Environment_2dof(List<string> emrat_e_3D_modeleve_2dof)
+        {
+            try
+            {
+
+                ModelImporter import = new ModelImporter();
+                nyjet_2dof = new List<Nyjet>();
+
+                foreach (string emri_i_modelit in emrat_e_3D_modeleve_2dof)
+                {
+                    var materialGroup = new MaterialGroup();
+                    Color mainColor = Colors.White;
+                    EmissiveMaterial emissMat = new EmissiveMaterial(new SolidColorBrush(mainColor));
+                    DiffuseMaterial diffMat = new DiffuseMaterial(new SolidColorBrush(mainColor));
+                    SpecularMaterial specMat = new SpecularMaterial(new SolidColorBrush(mainColor), 200);
+                    materialGroup.Children.Add(emissMat);
+                    materialGroup.Children.Add(diffMat);
+                    materialGroup.Children.Add(specMat);
+
+                    var link = import.Load(FollderiBaze + emri_i_modelit);
+                    GeometryModel3D model = link.Children[0] as GeometryModel3D;
+                    model.Material = materialGroup;
+                    model.BackMaterial = materialGroup;
+                    nyjet_2dof.Add(new Nyjet(link));
+                }
+
+
+                KrahuRobotik_2dof.Children.Add(nyjet_2dof[0].modeli);
+                KrahuRobotik_2dof.Children.Add(nyjet_2dof[1].modeli);
+                KrahuRobotik_2dof.Children.Add(nyjet_2dof[2].modeli);
+                
+
+
+                nyjet_2dof[0].kendiMin = -90;
+                nyjet_2dof[0].kendiMax = 90;
+                nyjet_2dof[0].aksiirrotX = 0;
+                nyjet_2dof[0].aksiirrotY = 0;
+                nyjet_2dof[0].aksiirrotZ = 1;
+                nyjet_2dof[0].pikaerrotX = -10.2;
+                nyjet_2dof[0].pikaerrotY = -325.195121951223;
+                nyjet_2dof[0].pikaerrotZ = 49.6794425087109;
+               
+                nyjet_2dof[1].kendiMin = -90;
+                nyjet_2dof[1].kendiMax = 90;
+                nyjet_2dof[1].aksiirrotX = 0;
+                nyjet_2dof[1].aksiirrotY = 0;
+                nyjet_2dof[1].aksiirrotZ = 1;
+                nyjet_2dof[1].pikaerrotX = -10.6198606271775;
+                nyjet_2dof[1].pikaerrotY = -326.114982578399;
+                nyjet_2dof[1].pikaerrotZ = 62.4390243902438;
+                
+                nyjet_2dof[2].kendiMin = -90;
+                nyjet_2dof[2].kendiMax = 90;
+                nyjet_2dof[2].aksiirrotX = 0;
+                nyjet_2dof[2].aksiirrotY = 0;
+                nyjet_2dof[2].aksiirrotZ = 1;
+                nyjet_2dof[2].pikaerrotX = -86.2787456445986;
+                nyjet_2dof[2].pikaerrotY = -326.114982578399;
+                nyjet_2dof[2].pikaerrotZ = 81.7986062717774;
+
+               
+
+
+            }
+            catch (Exception E)
+            {
+                MessageBox.Show("Exception Error:" + E.StackTrace);
+            }
+            return KrahuRobotik_2dof;
+        }
+
 
 
         private Color ndrro_ngjyten_e_modelit(Nyjet jnyjet, Color ngjyra_e_re)
@@ -916,6 +954,35 @@ namespace _6DOF_BOT
         {
             gjurmo_levizjet = false;
             komunikimi.IsEnabled = true;
+        }
+
+        private void Kin_direkte_2dof()
+        {
+            for (byte i=0;i<3;i++) {
+                if (i==0)
+                {
+                    _2dof[i] = new Transform3DGroup();
+                    R_2dof = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet_2dof[i].aksiirrotX, nyjet_2dof[i+1].aksiirrotY, nyjet_2dof[i].aksiirrotZ), teta[i]), new Point3D(nyjet_2dof[i].pikaerrotX, nyjet_2dof[i].pikaerrotY, nyjet_2dof[i].pikaerrotZ));
+                    _2dof[i].Children.Add(R_2dof);
+                }
+                else
+                {
+                    _2dof[i] = new Transform3DGroup();
+                    T_2dof = new TranslateTransform3D(0, 0, 0);
+                    R_2dof = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(nyjet_2dof[i].aksiirrotX, nyjet_2dof[i].aksiirrotY, nyjet_2dof[i].aksiirrotZ), teta[i-1]), new Point3D(nyjet_2dof[i].pikaerrotX, nyjet_2dof[i].pikaerrotY, nyjet_2dof[i].pikaerrotZ));
+                    _2dof[i].Children.Add(T_2dof);
+                    _2dof[i].Children.Add(R_2dof);
+                    _2dof[i].Children.Add(_2dof[i-1]);
+                }
+                
+                
+            }
+            
+
+            for (byte i = 1; i < 3; i++)
+            {
+                nyjet_2dof[i].modeli.Transform= _2dof[i];
+                    }
         }
 
         private void Sferat_levizese() { //sferat per qendrat rrotulluese 
