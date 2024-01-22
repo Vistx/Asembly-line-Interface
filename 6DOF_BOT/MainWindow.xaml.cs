@@ -789,8 +789,8 @@ namespace _6DOF_BOT
                 lidhu_but.IsEnabled = false;
                 Rrb_gjendja.SelectAll();
                 Rrb_gjendja.Selection.Text = "";
-                Rrb_gjendja.AppendText("Lidhur me Paisjen");
-                Rrb_gjendja.AppendText("\nKthehu ne gjendjen fillestare qe te mundesohet shkyqja");
+                Rrb_gjendja.AppendText("Connected ");
+                Rrb_gjendja.AppendText("\nReturn to Normal state");
                 timer3.Start();
             }
             catch (Exception err )

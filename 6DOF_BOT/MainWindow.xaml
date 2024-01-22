@@ -34,37 +34,39 @@
         <Label Content="{Binding Value, ElementName=nyja_5}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="340,237,0,0" RenderTransformOrigin="0.75,-1.365" Width="42" Height="26"/>
         <Label Content="{Binding Value, ElementName=nyja_6}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="340,268,0,0" RenderTransformOrigin="0.75,-1.365" Width="42" Height="26"/>
         <TabControl  HorizontalAlignment="Left" Height="267" Margin="-1,1,0,0" VerticalAlignment="Top" Width="382">
-            <TabItem x:Name="komunikimi" Header="Komunikimi">
+            <TabItem x:Name="komunikimi" Header="Communication">
                 <Grid Background="#FFEDF1FF" Margin="0,0,-0.2,0" Height="241" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*"/>
-                        <ColumnDefinition Width="21*"/>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="254*"/>
                     </Grid.ColumnDefinitions>
-                    <xctk:IntegerUpDown Value="1" x:Name="s_id" Height="22" Width="50" Maximum="247" Minimum="1" FontWeight="Bold" VerticalAlignment="Bottom" FlowDirection="RightToLeft" AutomationProperties.HelpText="Numri i Paisjes (Slave ID) per Modbus " AllowTextInput="False" DefaultValue="1" TextAlignment="Center" Margin="169,0,53.8,283.6" Grid.Column="1"  />
+                    <xctk:IntegerUpDown Value="1" x:Name="s_id" Height="22" Width="50" Maximum="247" Minimum="1" FontWeight="Bold" VerticalAlignment="Bottom" FlowDirection="RightToLeft" AutomationProperties.HelpText="Numri i Paisjes (Slave ID) per Modbus " AllowTextInput="False" DefaultValue="1" TextAlignment="Center" Margin="150.6,-65,53.8,284" Grid.Column="3"  />
 
-                    <ComboBox x:Name="_baudrate" HorizontalAlignment="Left" Margin="82,105,0,0" VerticalAlignment="Top" Width="92" Grid.ColumnSpan="2">
+                    <ComboBox x:Name="_baudrate" HorizontalAlignment="Left" Margin="62.8,105,0,0" VerticalAlignment="Top" Width="92" Grid.ColumnSpan="3" Grid.Column="1">
                         <ComboBoxItem Foreground="#FF8E1FFE" Content="9600" />
                         <ComboBoxItem Foreground="#FF8E1FFE" Content="19200" />
                         <ComboBoxItem Foreground="#FF8E1FFE" Content="115200" />
 
                     </ComboBox>
 
-                    <ComboBox x:Name="com_porta" HorizontalAlignment="Left" Margin="82,52,0,0" VerticalAlignment="Top" Width="92" DropDownOpened="com_porta_DropDownOpened" Grid.ColumnSpan="2"/>
-                    <Label  Foreground="#FF7F8DFF" Content="Baudrate " HorizontalAlignment="Left" Margin="16,101,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <Label Foreground="#FFFF1101" Content=" COM " HorizontalAlignment="Left" Margin="16,48,0,0" VerticalAlignment="Top" Width="61" FontWeight="Bold" HorizontalContentAlignment="Right"/>
-                    <Button x:Name="lidhu_but" Content="Lidhu me Paisjen" HorizontalAlignment="Left" Margin="147,86,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click" Grid.Column="1"/>
-                    <Button x:Name="Shkyqu" Content="Shkyqu" HorizontalAlignment="Left" Margin="147,112,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click_1" IsEnabled="False" Grid.Column="1"/>
-                    <Label Foreground="Violet" Content="Slave ID" HorizontalAlignment="Left" Margin="111,48,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <RichTextBox x:Name="Rrb_gjendja" Background="Black" Foreground="LimeGreen" HorizontalAlignment="Left" Height="88" Margin="0,143,0,0" VerticalAlignment="Top" Width="375" IsReadOnly="True" Grid.ColumnSpan="2">
+                    <ComboBox x:Name="com_porta" HorizontalAlignment="Left" Margin="62.8,52,0,0" VerticalAlignment="Top" Width="92" DropDownOpened="com_porta_DropDownOpened" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <Label  Foreground="#FF7F8DFF" Content="Baudrate " HorizontalAlignment="Left" Margin="16,101,0,0" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                    <Label Foreground="#FFFF1101" Content=" COM " HorizontalAlignment="Left" Margin="16,48,0,0" VerticalAlignment="Top" Width="61" FontWeight="Bold" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+                    <Button x:Name="lidhu_but" Content="Connect" HorizontalAlignment="Left" Margin="128.6,86,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click" Grid.Column="3"/>
+                    <Button x:Name="Shkyqu" Content="Disconnect" HorizontalAlignment="Left" Margin="128.6,112,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click_1" IsEnabled="False" Grid.Column="3"/>
+                    <Label Foreground="Violet" Content="Slave ID" HorizontalAlignment="Left" Margin="92.6,48,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+                    <RichTextBox x:Name="Rrb_gjendja" Background="Black" Foreground="LimeGreen" HorizontalAlignment="Left" Height="88" Margin="0,143,0,0" VerticalAlignment="Top" Width="375" IsReadOnly="True" Grid.ColumnSpan="4">
                         <FlowDocument>
                             <Paragraph>
-                                <Run Text="Statusi mbi Lidhjen e Rrobotit"/>
+                                <Run Text="Robot Status"/>
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="levizja" Header="Levizja" IsEnabled="False">
+            <TabItem x:Name="levizja" Header="Movement" IsEnabled="False">
                 <Grid Background="#FFECF0FC">
                     <Button x:Name="_levizja" Content="Shko ne poziten " HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="113" Click="_levizja_Click"/>
                     <ProgressBar x:Name="pr_bar" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="375"  Maximum="100" Minimum="0" Background="#FFECF0FC" />
@@ -72,7 +74,7 @@
                     <CheckBox x:Name="gjurmo_lev" Content="Gjurmo levizjet ne kohe reale " HorizontalAlignment="Left" Margin="175,85,0,0" VerticalAlignment="Top" Width="174" AutomationProperties.HelpText="Pas levizjes fillestare mund te behet gjurmimi i levizjeve te perdoruesit ne kohe reale" Checked="CheckBox_Checked" Unchecked="gjurmo_lev_Unchecked"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Konfigurimi i nyjeve" IsEnabled="False">
+            <TabItem Header="Joint Config" IsEnabled="False">
                 <Grid Background="#FFECF0FC">
                     <Slider IsSnapToTickEnabled="True" x:Name="z_nyjen" ValueChanged="z_nyjen_ValueChanged" HorizontalAlignment="Left" Margin="48,20,0,0" VerticalAlignment="Top" Height="20" Width="298" Maximum="6" SmallChange="1"/>
                     <Label Content="NYJA" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,15,0,0" RenderTransformOrigin="0.75,-1.365" Width="47" FontSize="14" FontWeight="Bold"/>
@@ -97,7 +99,7 @@
             </TabItem>
 
         </TabControl>
-        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="566" Margin="-1,268,0,0" VerticalAlignment="Top" Width="382">
+        <GroupBox Header="Sensor and Actuators" HorizontalAlignment="Left" Height="566" Margin="-1,268,0,0" VerticalAlignment="Top" Width="382">
             <Grid HorizontalAlignment="Left" Height="547" Margin="-6,0,-1.6,-3" VerticalAlignment="Top" Width="378">
                 <Ellipse x:Name="S0" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="40" Margin="228,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="40"/>
                 <Image HorizontalAlignment="Left" Height="40" Margin="273,10,0,0" VerticalAlignment="Top" Width="39" Source="engine-electricity-motor-svgrepo-com.png" Stretch="UniformToFill"/>
